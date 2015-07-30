@@ -1122,6 +1122,11 @@
 
       console.log('====[[ loading config: ', service_.configuration);
 
+      var epsg3338 = new ol.proj.Projection({
+        code: 'EPSG:3338',
+        units: 'm'
+      });
+
       var map = new ol.Map({
         //layers: do not add any layers to the map as they will be added once server is created and getcapabilities
         //        equivalent functions respond if relevant.
@@ -1141,6 +1146,7 @@
         ol3Logo: false,
         target: 'map',
         view: new ol.View({
+          projection: epsg3338,
           center: this.configuration.map.center,
           zoom: this.configuration.map.zoom,
           maxZoom: 17,
