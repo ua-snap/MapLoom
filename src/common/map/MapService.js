@@ -1109,6 +1109,8 @@
     };
 
     this.createMap = function() {
+      maploomProj4Defs(proj4.defs);
+
       var coordDisplay;
       if (settings.coordinateDisplay === coordinateDisplays.DMS) {
         coordDisplay = ol.coordinate.toStringHDMS;
@@ -1121,11 +1123,6 @@
       });
 
       console.log('====[[ loading config: ', service_.configuration);
-
-      var epsg3338 = new ol.proj.Projection({
-        code: 'EPSG:3338',
-        units: 'm'
-      });
 
       var map = new ol.Map({
         //layers: do not add any layers to the map as they will be added once server is created and getcapabilities
@@ -1146,7 +1143,7 @@
         ol3Logo: false,
         target: 'map',
         view: new ol.View({
-          projection: epsg3338,
+          projection: this.configuration.map.projection,
           center: this.configuration.map.center,
           zoom: this.configuration.map.zoom,
           maxZoom: 17,
