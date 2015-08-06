@@ -1143,11 +1143,9 @@
         ol3Logo: false,
         target: 'map',
         view: new ol.View({
-          projection: this.configuration.map.projection,
-          center: this.configuration.map.center,
-          zoom: this.configuration.map.zoom,
-          maxZoom: 17,
-          maxResolution: 40075016.68557849 / 2048
+          projection: 'EPSG:3338',
+          center: [195289.579, 1423521.5],
+          zoom: 6
         })
       });
 
