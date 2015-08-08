@@ -362,8 +362,7 @@ var SERVER_SERVICE_USE_PROXY = true;
       for (var index = 0; index < layersConfig.length; index += 1) {
         if (layersConfig[index].Name === layerName) {
           layerConfig = layersConfig[index];
-
-          if (goog.isDefAndNotNull(layerConfig.CRS)) {
+          if (goog.isArray(layerConfig.CRS)) {
             for (var code in layerConfig.CRS) {
               if (layerConfig.CRS[code] !== 'CRS:84') {
                 layerConfig.CRS = layerConfig.CRS[code];

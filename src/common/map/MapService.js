@@ -320,9 +320,9 @@
                         JSON.parse(upper[1], 10)];
           //console.log('------- [[ bounds: ', bounds);
           var transform = ol.proj.getTransformFromProjections(ol.proj.get(layer.get('metadata').projection),
-              ol.proj.get('EPSG:900913'));
-          var extent900913 = ol.extent.applyTransform(bounds, transform);
-          service_.zoomToExtent(extent900913, null, null, 0.1);
+              ol.proj.get('EPSG:3338'));
+          var extent3338 = ol.extent.applyTransform(bounds, transform);
+          service_.zoomToExtent(extent3338, null, null, 0.1);
           deferredResponse.resolve();
         }).error(function(data, status, headers, config) {
           console.log('----[ Warning: wps gs:bounds failed, zooming to layer bounds ', data, status, headers, config);
@@ -359,18 +359,18 @@
         return newExtent;
       };
 
-      var extent900913 = shrinkExtent(layer.getSource().getExtent(), 0);
+      var extent3338 = shrinkExtent(layer.getSource().getExtent(), 0);
 
-      if (goog.isDefAndNotNull(extent900913)) {
-        for (var index = 0; index < extent900913.length; index++) {
-          if (isNaN(parseFloat(extent900913[index])) || !isFinite(extent900913[index])) {
-            extent900913 = shrinkExtent(layer.getSource().getExtent(), 0.001);
+      if (goog.isDefAndNotNull(extent3338)) {
+        for (var index = 0; index < extent3338.length; index++) {
+          if (isNaN(parseFloat(extent3338[index])) || !isFinite(extent3338[index])) {
+            extent3338 = shrinkExtent(layer.getSource().getExtent(), 0.001);
             break;
           }
         }
       }
 
-      service_.zoomToExtent(extent900913);
+      service_.zoomToExtent(extent3338);
     };
 
     this.getLayers = function(includeHidden, includeEditable) {
@@ -1109,6 +1109,8 @@
     };
 
     this.createMap = function() {
+      maploomProj4Defs(proj4.defs);
+
       var coordDisplay;
       if (settings.coordinateDisplay === coordinateDisplays.DMS) {
         coordDisplay = ol.coordinate.toStringHDMS;
@@ -1141,10 +1143,9 @@
         ol3Logo: false,
         target: 'map',
         view: new ol.View({
-          center: this.configuration.map.center,
-          zoom: this.configuration.map.zoom,
-          maxZoom: 17,
-          maxResolution: 40075016.68557849 / 2048
+          projection: 'EPSG:3338',
+          center: [195289.579, 1423521.5],
+          zoom: 6
         })
       });
 
